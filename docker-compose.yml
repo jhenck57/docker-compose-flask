@@ -1,4 +1,4 @@
-version: '2'
+version: '3.7'
 
 services:
 
@@ -17,6 +17,6 @@ services:
     restart: always
     build: ./nginx/
     ports:
-      - "80:80"
+      - "8080:80"
     links:
       - web
