@@ -1,4 +1,4 @@
-version: '2'
+version: '3.7'
 
 services:
 
@@ -13,10 +13,10 @@ services:
     links:
       - redis
 
-  nginx:
-    restart: always
-    build: ./nginx/
-    ports:
-      - "80:80"
-    links:
-      - web
+  #nginx:
+    #restart: always
+    #build: ./nginx/
+    #ports:
+    #  - "8080:80"
+    #links:
+    #  - web

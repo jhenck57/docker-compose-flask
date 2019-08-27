@@ -1,8 +1,23 @@
-FROM python:2.7
-LABEL maintainer="Peng Xiao<xiaoquwl@gmail.com>"
+FROM python:3.6-alpine
 
-COPY . /
+RUN adduser -D microblog
 
-RUN pip install -r requirements.txt && pip install gunicorn
+WORKDIR /home/microblog
 
-ENTRYPOINT ["/runserver.sh"]
+COPY requirements.txt requirements.txt
+RUN python -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+RUN venv/bin/pip install gunicorn
+
+COPY app app
+COPY migrations migrations
+COPY microblog.py config.py boot.sh ./
+RUN chmod +x boot.sh
+
+ENV FLASK_APP microblog.py
+
+RUN chown -R microblog:microblog ./
+USER microblog
+
+EXPOSE 5000
+ENTRYPOINT ["./boot.sh"]
